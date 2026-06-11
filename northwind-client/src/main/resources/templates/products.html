@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Productos Northwind</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f4f4f4;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        .card {
+            background: white;
+            padding: 18px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 5px #ccc;
+        }
+
+        input {
+            padding: 8px;
+            width: 180px;
+        }
+
+        button {
+            padding: 8px 14px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background: #333;
+            color: white;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .found {
+            background: #e7ffe7;
+            border: 1px solid #7ac77a;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Productos Northwind</h1>
+
+<div class="card">
+    <h2>Buscar producto por ID</h2>
+
+    <form th:action="@{/products/search}" method="post">
+        <input type="text" name="id" placeholder="Ingrese ID">
+        <button type="submit">Buscar</button>
+    </form>
+</div>
+
+<div th:if="${error}" class="error">
+    <p th:text="${error}"></p>
+</div>
+
+<div th:if="${productFound}" class="found">
+    <h2>Producto encontrado</h2>
+
+    <p><strong>ID:</strong> <span th:text="${productFound.id}"></span></p>
+    <p><strong>Nombre:</strong> <span th:text="${productFound.productName}"></span></p>
+    <p><strong>Cantidad por unidad:</strong> <span th:text="${productFound.quantityPerUnit}"></span></p>
+    <p><strong>Precio:</strong> <span th:text="${productFound.unitPrice}"></span></p>
+    <p><strong>Stock:</strong> <span th:text="${productFound.unitsInStock}"></span></p>
+</div>
+
+<div class="card">
+    <h2>Listado de productos</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Producto</th>
+            <th>Cantidad por unidad</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Categoría</th>
+            <th>Proveedor</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="product : ${products}">
+            <td th:text="${product.id}"></td>
+            <td th:text="${product.productName}"></td>
+            <td th:text="${product.quantityPerUnit}"></td>
+            <td th:text="${product.unitPrice}"></td>
+            <td th:text="${product.unitsInStock}"></td>
+            <td th:text="${product.category != null ? product.category.categoryName : 'Sin categoría'}"></td>
+            <td th:text="${product.supplier != null ? product.supplier.companyName : 'Sin proveedor'}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
