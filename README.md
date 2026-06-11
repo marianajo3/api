@@ -48,3 +48,28 @@ La documentación del API está en:
 ```txt
 northwind-api/API_DOCUMENTATION.md
 ```
+fetch("http://localhost:8080/product", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    id: 100,
+    productName: "Producto de prueba",
+    supplier: {
+      id: 1
+    },
+    category: {
+      id: 1
+    },
+    quantityPerUnit: "10 unidades",
+    unitPrice: 25.5,
+    unitsInStock: 20,
+    unitsOnOrder: 0,
+    reorderLevel: 5,
+    discontinued: false
+  })
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error("Error:", error));
